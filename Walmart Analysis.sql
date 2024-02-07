@@ -75,7 +75,7 @@ FROM sales;
 
                  ----------------------------------------
                  -----------Business Questions-----------
-				 ----------------------------------------
+		 ----------------------------------------
 				 
 -- A. BRANCH & CITY INSIGHTS
 
@@ -179,8 +179,8 @@ ORDER BY 2 DESC;
 
 SELECT product_line,
 	   CASE
-	   		WHEN AVG(total) > (SELECT AVG(total) FROM sales) THEN 'Above Average'
-			  ELSE 'Below Average'
+	   	WHEN AVG(total) > (SELECT AVG(total) FROM sales) THEN 'Above Average'
+		ELSE 'Below Average'
 	   END AS category
 FROM sales
 GROUP BY product_line
@@ -199,9 +199,8 @@ ORDER BY product_line, 3 DESC;
 
 ----1. What is the total revenue by month?
 
-SELECT 
-	month_name,
-	CAST(ROUND(SUM(total),2) AS money) AS total_revenue
+SELECT month_name,
+       CAST(ROUND(SUM(total),2) AS money) AS total_revenue
 FROM sales
 GROUP BY month_name
 ORDER BY 2 DESC;
@@ -217,7 +216,7 @@ ORDER BY revenue DESC;
 ----3.What weekday and time of day is the most popular time to shop?
 SELECT name_of_day AS weekday,
        time_of_day,
-	   COUNT(*) AS number_of_transactions -- transctions
+       COUNT(*) AS number_of_transactions -- transctions
 FROM sales
 GROUP BY weekday, time_of_day
 ORDER BY number_of_transactions DESC,weekday
@@ -249,12 +248,12 @@ SELECT
     EXTRACT(MONTH FROM date) AS month,
     CAST(ROUND(SUM(total), 2) AS money) AS total_revenue,
     CONCAT(
-		ROUND(
-			COALESCE(
-       			 (SUM(total) - LAG(SUM(total)) OVER (ORDER BY EXTRACT(MONTH FROM date))) /
+	   ROUND(
+		 COALESCE(
+       			  (SUM(total) - LAG(SUM(total)) OVER (ORDER BY EXTRACT(MONTH FROM date))) /
         			NULLIF(LAG(SUM(total)) OVER (ORDER BY EXTRACT(MONTH FROM date)), 0) * 100, --Using NULLIF to avoid errors in division.
        				 0),2),'%')
-     						AS percent_change
+     					AS percent_change
 FROM sales
 GROUP BY month;
 
