@@ -276,7 +276,7 @@ FROM sales
 GROUP BY branch, gender
 ORDER BY branch, gender;
 
-----2. What is the average spend per A)customer, B)customer type, and C)gender. 2A)Who is your best customer?
+----2. What is the average spend per A)customer, B)customer type, and C)gender. 2A)Who is the best customer?
 
 --A)
 SELECT ROUND(AVG(total),2) AS average_per_customer
